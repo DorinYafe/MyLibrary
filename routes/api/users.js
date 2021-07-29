@@ -11,7 +11,6 @@ const User = require('../../models/User');
 // @route   Post api/users
 // @desc    Register user
 // @access  Public
-
 router.post(
     '/',
     [
@@ -28,7 +27,6 @@ router.post(
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
-
         const { name, email, password, } = req.body;
 
         try {
@@ -61,10 +59,11 @@ router.post(
                     id: user.id,
                 }
             }
+            // console.log(123); not getting here
 
             jwt.sign(
-                payload.
-                    config.get('jwtSecret'),
+                payload,
+                config.get('jwtSecret'),
                 { expiersIn: 360000 },
                 (err, token) => {
                     if (err) throw err;
