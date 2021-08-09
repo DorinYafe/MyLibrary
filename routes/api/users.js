@@ -48,7 +48,7 @@ router.post(
                 password,
             });
 
-            const salt = await bcrypt.getSalt(10);
+            const salt = await bcrypt.genSalt(10);
 
             user.password = await bcrypt.hash(password, salt);
 
@@ -59,12 +59,11 @@ router.post(
                     id: user.id,
                 }
             }
-            // console.log(123); not getting here
 
             jwt.sign(
                 payload,
                 config.get('jwtSecret'),
-                { expiersIn: 360000 },
+                { expiresIn: 360000 },
                 (err, token) => {
                     if (err) throw err;
                     res.json({ token });
@@ -77,6 +76,6 @@ router.post(
             res.status(500).send('Server error');
         }
     }
-)
+);
 
 module.exports = router;
